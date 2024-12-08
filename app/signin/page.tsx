@@ -59,17 +59,21 @@ export default function SignInPage() {
         event.currentTarget.elements.namedItem("password") as HTMLInputElement
       ).value;
       await login(email, password);
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       console.error("Login error:", error);
-      if (error?.message?.includes("Invalid credentials")) {
-        setError(
-          "Invalid email or password. If you don't have an account, please create one first."
-        );
-      } else if (error?.message?.includes("Session already exists")) {
-        setError(error.message);
-        redirect("/home");
+      if (error instanceof Error) {
+        if (error.message.includes("Invalid credentials")) {
+          setError(
+            "Invalid email or password. If you don't have an account, please create one first."
+          );
+        } else if (error.message.includes("Session already exists")) {
+          setError(error.message);
+          redirect("/home");
+        } else {
+          setError(error.message || "An error occurred. Please try again.");
+        }
       } else {
-        setError(error.message || "An error occurred. Please try again.");
+        setError("An unexpected error occurred. Please try again.");
       }
     } finally {
       setIsLoading(false);

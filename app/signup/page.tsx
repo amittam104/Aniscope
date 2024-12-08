@@ -55,16 +55,20 @@ export default function SignUpPage() {
     try {
       await account.create(ID.unique(), email, password, name);
       await login(email, password);
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       console.error("Registration error:", error);
-      if (error?.message?.includes("Session already exists")) {
-        setError(error.message);
-        redirect("/home");
+      if (error instanceof Error) {
+        if (error.message.includes("Session already exists")) {
+          setError(error.message);
+          redirect("/home");
+        } else {
+          setError(
+            error.message ||
+              "An error occurred during registration. Please try again."
+          );
+        }
       } else {
-        setError(
-          error.message ||
-            "An error occurred during registration. Please try again."
-        );
+        setError("An unexpected error occurred during registration. Please try again.");
       }
     } finally {
       setIsLoading(false);

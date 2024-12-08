@@ -17,9 +17,6 @@ export function Breadcrumbs() {
   const pathname = usePathname();
   const [animeName, setAnimeName] = useState<string | null>(null);
 
-  // Skip rendering breadcrumbs on home page
-  if (pathname === "/home") return null;
-
   const pathSegments = pathname
     .split("/")
     .filter((segment) => segment !== "" && segment !== "(authenticated)");
@@ -43,6 +40,9 @@ export function Breadcrumbs() {
     };
     fetchAnimeName();
   }, [animeId]);
+
+  // Skip rendering breadcrumbs on home page
+  if (pathname === "/home") return null;
 
   // Combine anime and ID segments
   const processedSegments = pathSegments.reduce(
