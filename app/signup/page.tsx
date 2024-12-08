@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { account, ID } from "@/lib/appwrite";
+import { account, ID, User } from "@/lib/appwrite";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
