@@ -9,18 +9,22 @@ A modern web application that empowers anime enthusiasts to explore, search, and
 ## Features
 
 ### Core Features
+
 - **User Authentication**
+
   - Secure signup/login via email and password using Appwrite Auth
   - Password recovery functionality
   - Session persistence across devices
 
 - **Anime Discovery**
+
   - Curated list of top anime with essential details
   - Detailed information pages including synopsis, genres, and ratings
   - Real-time search with advanced filtering options
   - Personalized anime recommendations
 
 - **Bookmarking System**
+
   - Save favorite anime for quick access
   - Organize and manage bookmarks
   - Cross-device bookmark synchronization
@@ -34,11 +38,13 @@ A modern web application that empowers anime enthusiasts to explore, search, and
 ## Tech Stack
 
 **Frontend:**
+
 - Next.js
 - Tailwind CSS
 - ShadCN UI Components
 
 **Backend & Services:**
+
 - Appwrite (Authentication & Database)
 - Jikan API (Anime Data)
 
@@ -92,18 +98,6 @@ To run this project, you will need to add the following environment variables to
 - Support for up to 5,000 concurrent users
 - Optimized API calls with debouncing
 - WCAG 2.1 AA compliant for accessibility
-
-## Project Timeline
-
-**Day 1:**
-- Core technology setup
-- Landing page and authentication implementation
-- Top anime list integration
-
-**Day 2:**
-- Anime detail view and recommendations
-- Bookmarking and search functionality
-- UI polish and final testing
 
 ## Acknowledgements
 
