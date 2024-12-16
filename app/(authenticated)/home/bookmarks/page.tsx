@@ -92,7 +92,7 @@ export default function BookmarksPage() {
         {bookmarkedAnime.map((anime) => (
           <Link
             key={anime.mal_id}
-            href={`/home/anime/${anime.mal_id}`}
+            href={`/home/anime/${anime?.mal_id}`}
             className="group relative transition-transform hover:-translate-y-1 h-[360px]"
           >
             <Card className="overflow-hidden h-full">
