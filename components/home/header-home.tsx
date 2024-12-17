@@ -201,6 +201,12 @@ export function Header() {
               Home
             </Link>
             <Link
+              href="/home/recommendations"
+              className="text-sm font-medium hover:text-primary"
+            >
+              Recommendations
+            </Link>
+            <Link
               href="/home/bookmarks"
               className="text-sm font-medium hover:text-primary"
             >
@@ -250,6 +256,14 @@ export function Header() {
                   }`}
                 >
                   Home
+                </Link>
+                <Link
+                  href="/home/recommendations"
+                  className={`text-sm font-medium hover:text-primary ${
+                    pathname === "/home/recommendations" ? "text-primary" : ""
+                  }`}
+                >
+                  Recommendations
                 </Link>
                 <Link
                   href="/home/bookmarks"

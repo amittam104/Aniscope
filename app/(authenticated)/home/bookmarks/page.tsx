@@ -91,15 +91,15 @@ export default function BookmarksPage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {bookmarkedAnime.map((anime) => (
           <Link
-            key={anime.mal_id}
+            key={anime?.mal_id}
             href={`/home/anime/${anime?.mal_id}`}
             className="group relative transition-transform hover:-translate-y-1 h-[360px]"
           >
             <Card className="overflow-hidden h-full">
               <div className="relative h-[70%]">
                 <Image
-                  src={anime.images.webp.large_image_url}
-                  alt={anime.title}
+                  src={anime?.images.webp.large_image_url}
+                  alt={anime?.title}
                   fill
                   className="object-cover"
                 />
@@ -107,23 +107,23 @@ export default function BookmarksPage() {
                   variant="ghost"
                   size="icon"
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 hover:bg-black/70 hover:text-white text-white"
-                  onClick={(e) => removeFromBookmarks(anime.mal_id, e)}
+                  onClick={(e) => removeFromBookmarks(anime?.mal_id, e)}
                 >
                   <X className="h-4 w-4 " />
                 </Button>
               </div>
               <div className="flex flex-col justify-between h-[30%] p-3">
                 <h2 className="text-sm font-medium line-clamp-2">
-                  {anime.title}
+                  {anime?.title}
                 </h2>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-primary" />
-                    <span>{anime.score || "N/A"}</span>
+                    <span>{anime?.score || "N/A"}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4 text-primary" />
-                    <span>{anime.year || "TBA"}</span>
+                    <span>{anime?.year || "TBA"}</span>
                   </div>
                 </div>
               </div>
