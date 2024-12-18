@@ -123,12 +123,15 @@ export default function RecommendationsPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
                     <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
-                      <CardTitle className="dark:text-white text-slate-950 text-xl">
+                      <div className="group-hover:translate-x-2 transition-all duration-300">
+                        <TrendingUp className="h-4 w-4 dark:text-white text-slate-50 group-hover:text-primary transition-colors duration-300" />
+                      </div>
+                      <CardTitle className="dark:text-white text-slate-50 text-xl mt-3">
                         {card.title}
                       </CardTitle>
-                      <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                      <p className="dark:text-gray-200 text-slate-50 text-sm mt-2">
                         {card.description}
                       </p>
                     </CardHeader>
@@ -154,12 +157,15 @@ export default function RecommendationsPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
                   <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
-                    <CardTitle className="dark:text-white text-slate-950 text-xl">
+                    <div className="group-hover:translate-x-2 transition-all duration-300">
+                      <Star className="h-4 w-4 dark:text-white text-slate-50 group-hover:text-primary transition-colors duration-300" />
+                    </div>
+                    <CardTitle className="dark:text-white text-slate-50 text-xl mt-3">
                       {card.title}
                     </CardTitle>
-                    <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                    <p className="dark:text-gray-200 text-slate-50 text-sm mt-2">
                       {card.description}
                     </p>
                   </CardHeader>
@@ -196,15 +202,15 @@ export default function RecommendationsPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
                   <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
-                    <div className="flex items-center gap-2">
-                      <Icon className="h-5 w-5 dark:text-white text-slate-950" />
-                      <CardTitle className="dark:text-white text-slate-950 text-xl">
-                        {card.title}
-                      </CardTitle>
+                    <div className="group-hover:translate-x-2 transition-all duration-300">
+                      <Icon className="h-4 w-4 dark:text-white text-slate-50 group-hover:text-primary transition-colors duration-300" />
                     </div>
-                    <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                    <CardTitle className="dark:text-white text-slate-50 text-xl mt-3">
+                      {card.title}
+                    </CardTitle>
+                    <p className="dark:text-gray-200 text-slate-50 text-sm mt-2">
                       {card.description}
                     </p>
                   </CardHeader>
