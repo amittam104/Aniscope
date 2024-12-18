@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -9,142 +11,207 @@ import {
   Calendar,
   Sun,
 } from "lucide-react";
+import { getTopAnime } from "@/lib/services";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function RecommendationsPage() {
+  const [topAnime, setTopAnime] = useState<any[]>([]);
+  const [basicAnime, setBasicAnime] = useState<any[]>([]);
+  const [genreAnime, setGenreAnime] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchAnime = async () => {
+      try {
+        const [topResponse, basicResponse, genreResponse] = await Promise.all([
+          getTopAnime(1, 7),
+          getTopAnime(2, 3),
+          getTopAnime(3, 3), // Get 3 more anime for the genre collage
+        ]);
+        setTopAnime(topResponse.data);
+        setBasicAnime(basicResponse.data);
+        setGenreAnime(genreResponse.data);
+      } catch (error) {
+        console.error("Error fetching anime:", error);
+      }
+    };
+
+    fetchAnime();
+  }, []);
+
+  const cards = [
+    {
+      icon: TrendingUp,
+      title: "Trending Anime",
+      description: "Currently trending across popular platforms",
+    },
+    {
+      icon: Star,
+      title: "Based on Popularity",
+      description: "Most watched and highly rated anime",
+    },
+    {
+      icon: Building2,
+      title: "Based on Studio",
+      description: "Explore anime from top studios like Ghibli, MAPPA",
+    },
+    {
+      icon: Clock,
+      title: "Based on Length",
+      description: "Short series, long-running shows, and movies",
+    },
+    {
+      icon: Award,
+      title: "Award-Winning Anime",
+      description: "Critically acclaimed and award-winning series",
+    },
+    {
+      icon: Calendar,
+      title: "Anime by Year",
+      description: "Discover classics and modern hits by year",
+    },
+    {
+      icon: Sun,
+      title: "Seasonal Recommendations",
+      description: "Discover anime by Winter, Spring, and Summer seasons",
+    },
+  ];
+
+  const basicCards = [
+    {
+      title: "Based on Genre",
+      description: "Discover anime based on your favorite genres",
+    },
+    {
+      title: "New to Anime",
+      description: "Perfect starting points for beginners",
+    },
+    {
+      title: "Based on Your Mood",
+      description: "Find anime that matches your current mood",
+    },
+  ];
+
   return (
     <div className="container mx-auto pt-20 space-y-8">
       {/* Basics Section */}
       <section>
         <h2 className="text-3xl font-bold mb-6">Basics</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Genre Based Card */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <CardTitle>Based on Genre</CardTitle>
-              <p className="text-muted-foreground">
-                Discover anime based on your favorite genres
-              </p>
-            </CardHeader>
-          </Card>
+          {basicCards.map((card, index) => {
+            const anime = basicAnime[index];
 
-          {/* New to Anime Card */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <CardTitle>New to Anime</CardTitle>
-              <p className="text-muted-foreground">
-                Perfect starting points for beginners
-              </p>
-            </CardHeader>
-          </Card>
+            if (index === 0) {
+              // Special handling for the first card (Genre-based)
+              return (
+                <Card
+                  key={card.title}
+                  className="group relative overflow-hidden cursor-pointer h-[200px] shadow-none hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="absolute inset-0 flex">
+                    {genreAnime.slice(0, 3).map((anime) => (
+                      <div key={anime.mal_id} className="relative flex-1">
+                        <Image
+                          src={
+                            anime.images.webp.large_image_url ||
+                            anime.images.webp.image_url
+                          }
+                          alt={anime.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                    <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
+                      <CardTitle className="dark:text-white text-slate-950 text-xl">
+                        {card.title}
+                      </CardTitle>
+                      <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                        {card.description}
+                      </p>
+                    </CardHeader>
+                  </div>
+                </Card>
+              );
+            }
 
-          {/* Mood Based Card */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <CardTitle>Based on Your Mood</CardTitle>
-              <p className="text-muted-foreground">
-                Find anime that matches your current mood
-              </p>
-            </CardHeader>
-          </Card>
+            // Regular cards
+            return (
+              <Card
+                key={card.title}
+                className="group relative overflow-hidden cursor-pointer h-[200px] shadow-none hover:shadow-lg transition-all duration-300"
+              >
+                {anime && (
+                  <Image
+                    src={
+                      anime.images.webp.large_image_url ||
+                      anime.images.webp.image_url
+                    }
+                    alt={anime.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                  <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
+                    <CardTitle className="dark:text-white text-slate-950 text-xl">
+                      {card.title}
+                    </CardTitle>
+                    <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                      {card.description}
+                    </p>
+                  </CardHeader>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </section>
 
       <Separator className="my-8" />
 
-      {/* Additional categories will be added here */}
+      {/* Additional categories */}
       <section>
         <h2 className="text-3xl font-bold mb-6">More Recommendations</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Trending Anime */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                <CardTitle>Trending Anime</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Currently trending across popular platforms
-              </p>
-            </CardHeader>
-          </Card>
+          {cards.map((card, index) => {
+            const Icon = card.icon;
+            const anime = topAnime[index];
 
-          {/* Based on Popularity */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5" />
-                <CardTitle>Based on Popularity</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Most watched and highly rated anime
-              </p>
-            </CardHeader>
-          </Card>
-
-          {/* Based on Studio */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Building2 className="h-5 w-5" />
-                <CardTitle>Based on Studio</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Explore anime from top studios like Ghibli, MAPPA
-              </p>
-            </CardHeader>
-          </Card>
-
-          {/* Based on Length */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5" />
-                <CardTitle>Based on Length</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Short series, long-running shows, and movies
-              </p>
-            </CardHeader>
-          </Card>
-
-          {/* Award-Winning Anime */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Award className="h-5 w-5" />
-                <CardTitle>Award-Winning Anime</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Critically acclaimed and award-winning series
-              </p>
-            </CardHeader>
-          </Card>
-
-          {/* Anime by Year */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
-                <CardTitle>Anime by Year</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Discover classics and modern hits by year
-              </p>
-            </CardHeader>
-          </Card>
-
-          {/* Seasonal Recommendations */}
-          <Card className="hover:bg-accent transition-colors cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Sun className="h-5 w-5" />
-                <CardTitle>Seasonal Recommendations</CardTitle>
-              </div>
-              <p className="text-muted-foreground">
-                Discover anime by Winter, Spring, and Summer seasons
-              </p>
-            </CardHeader>
-          </Card>
+            return (
+              <Card
+                key={card.title}
+                className="group relative overflow-hidden cursor-pointer h-[200px] shadow-none hover:shadow-lg transition-all duration-300"
+              >
+                {anime && (
+                  <Image
+                    src={
+                      anime.images.webp.large_image_url ||
+                      anime.images.webp.image_url
+                    }
+                    alt={anime.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent">
+                  <CardHeader className="relative h-full flex flex-col justify-center max-w-[60%] pl-6">
+                    <div className="flex items-center gap-2">
+                      <Icon className="h-5 w-5 dark:text-white text-slate-950" />
+                      <CardTitle className="dark:text-white text-slate-950 text-xl">
+                        {card.title}
+                      </CardTitle>
+                    </div>
+                    <p className="dark:text-gray-200 text-slate-800 text-sm mt-2">
+                      {card.description}
+                    </p>
+                  </CardHeader>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </section>
     </div>

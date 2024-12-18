@@ -120,7 +120,7 @@ export function AnimeCard({
 
   return (
     <Card
-      className="overflow-hidden group hover:shadow-lg transition-all duration-300 cursor-pointer h-full"
+      className="overflow-hidden group shadow-none hover:shadow-lg transition-all duration-300 cursor-pointer h-full"
       onClick={handleClick}
     >
       <CardContent className="p-0 h-full">

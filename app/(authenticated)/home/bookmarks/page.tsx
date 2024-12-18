@@ -95,7 +95,7 @@ export default function BookmarksPage() {
             href={`/home/anime/${anime?.mal_id}`}
             className="group relative transition-transform hover:-translate-y-1 h-[360px]"
           >
-            <Card className="overflow-hidden h-full">
+            <Card className="overflow-hidden h-full shadow-none hover:shadow-lg transition-all duration-300">
               <div className="relative h-[70%]">
                 <Image
                   src={anime?.images.webp.large_image_url}
