@@ -28,6 +28,7 @@ export default async function HomePage({
     rating
   );
 
+
   // Check if next page is available within the 10-page limit
   const hasNextPage = pagination.has_next_page && currentPage < 10;
 

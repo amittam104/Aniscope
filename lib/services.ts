@@ -13,6 +13,7 @@ export interface Anime {
   episodes: number;
   status: string;
   year: number;
+  rating: string;
   genres: {
     mal_id: number;
     name: string;

@@ -48,7 +48,16 @@
     --ring: 263.4 70% 50.4%;
   }
 }
- 
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -57,4 +66,3 @@
     @apply bg-background text-foreground;
   }
 }
-
